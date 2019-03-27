@@ -89,18 +89,30 @@ public class MainActivity extends AppCompatActivity {
 
             tv1.setText("lemme see them signals >:) " + results.size());
 
-            //No results found?
             for (ScanResult scanResult : results) {
                 arrayList.add(scanResult.SSID + " - " + scanResult.capabilities);
                 adapter.notifyDataSetChanged();
-                tv1.setText("Where is my wifi >:(");
             }
-            tv1.setText("Wifi why you no show >:( " + results.size());
+            
+            String topThree = "";
+            for(int i = 0; i < 4; i++){
+                ScanResult temp = results.get(i);
+                topThree += ("Name:     " + temp.SSID + "\nMAC:       " + temp.BSSID + "\nStrength: " + temp.level + "dB\n\n");
+            }
+            tv1.setText(topThree);
+            //ListView test = (TextView)findViewById(R.id.wifiList);
+            
+            //ArrayAdapter
+            //NotifyUpdate
         };
     };
 
+    /*This creates an instance of activity_display_message*/
+    public void sendMessage(View view, List<ScanResult> results) {
+        //Get the table
+        //table = (TableLayout_find)ViewById(R.id.myTable);
 
-    public void sendMessage(View view) {
+
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         EditText editText = (EditText) findViewById(R.id.editText);
         String message = editText.getText().toString();
