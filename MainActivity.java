@@ -95,9 +95,14 @@ public class MainActivity extends AppCompatActivity {
             }
             
             String topThree = "";
-            for(int i = 0; i < 4; i++){
-                ScanResult temp = results.get(i);
-                topThree += ("Name:     " + temp.SSID + "\nMAC:       " + temp.BSSID + "\nStrength: " + temp.level + "dB\n\n");
+
+            int x = 0;
+            for(ScanResult temp: results){
+                if (x >= 3){ break; }
+                if (temp.level > -75){
+                    topThree += ("Name:     " + temp.SSID + "\nMAC:       " + temp.BSSID + "\nStrength: " + temp.level + "dB\n\n");
+                    x++;
+                }
             }
             tv1.setText(topThree);
             //ListView test = (TextView)findViewById(R.id.wifiList);
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     /*This creates an instance of activity_display_message*/
-    public void sendMessage(View view, List<ScanResult> results) {
+    public void sendMessage(View view) {
         //Get the table
         //table = (TableLayout_find)ViewById(R.id.myTable);
 
