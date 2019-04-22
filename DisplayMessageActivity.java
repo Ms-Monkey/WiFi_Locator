@@ -68,7 +68,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView12 = findViewById(R.id.row4Strength);
         textView12.setText("" + four.level);
 
-        ScanResult five = test.get(3);
+        ScanResult five = test.get(4);
         TextView textView13 = findViewById(R.id.row5Name);
         textView13.setText(five.SSID);
         TextView textView14 = findViewById(R.id.row5MAC);
@@ -76,7 +76,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView15 = findViewById(R.id.row5Strength);
         textView15.setText("" + five.level);
 
-        ScanResult six = test.get(3);
+        ScanResult six = test.get(5);
         TextView textView16 = findViewById(R.id.row6Name);
         textView16.setText(six.SSID);
         TextView textView17 = findViewById(R.id.row6MAC);
