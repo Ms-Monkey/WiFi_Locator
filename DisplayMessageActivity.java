@@ -84,6 +84,38 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView18 = findViewById(R.id.row6Strength);
         textView18.setText("" + six.level);
 
+        ScanResult seven = test.get(6);
+        TextView textView19 = findViewById(R.id.row7Name);
+        textView19.setText(seven.SSID);
+        TextView textView20 = findViewById(R.id.row7MAC);
+        textView20.setText("" + seven.BSSID);
+        TextView textView21 = findViewById(R.id.row7Strength);
+        textView21.setText("" + seven.level);
+
+        ScanResult eight = test.get(7);
+        TextView textView22 = findViewById(R.id.row8Name);
+        textView22.setText(eight.SSID);
+        TextView textView23 = findViewById(R.id.row8MAC);
+        textView23.setText("" + eight.BSSID);
+        TextView textView24 = findViewById(R.id.row8Strength);
+        textView24.setText("" + eight.level);
+
+        ScanResult nine = test.get(8);
+        TextView textView25 = findViewById(R.id.row9Name);
+        textView25.setText(nine.SSID);
+        TextView textView26 = findViewById(R.id.row9MAC);
+        textView26.setText("" + nine.BSSID);
+        TextView textView27 = findViewById(R.id.row9Strength);
+        textView27.setText("" + nine.level);
+
+        ScanResult ten = test.get(9);
+        TextView textView28 = findViewById(R.id.row10Name);
+        textView28.setText(ten.SSID);
+        TextView textView29 = findViewById(R.id.row10MAC);
+        textView29.setText("" + ten.BSSID);
+        TextView textView30 = findViewById(R.id.row10Strength);
+        textView30.setText("" + ten.level);
+
 
 
         //print length of scan results
