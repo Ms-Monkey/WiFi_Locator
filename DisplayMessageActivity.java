@@ -43,6 +43,10 @@ public class DisplayMessageActivity extends AppCompatActivity {
         WifiSignal highest;
         for (WifiSignal x: unorderedSignals){
             highest = x;
+            if (signals.contains(x)){
+                continue;
+            }
+
             for (WifiSignal y: unorderedSignals){
                 //If the value is greater than y's and it isn't in signals already
                 if (highest.level < y.level && !signals.contains(y)){
@@ -58,7 +62,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView1 = findViewById(R.id.row1Name);
         textView1.setText(one.SSID);
         TextView textView2 = findViewById(R.id.row1MAC);
-        textView2.setText("" + one.BSSID);
+        textView2.setText("" + one.BSSID + " / " + one.frequency);
         TextView textView3 = findViewById(R.id.row1Strength);
         textView3.setText("" + one.level);
 
@@ -66,7 +70,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView4 = findViewById(R.id.row2Name);
         textView4.setText(two.SSID);
         TextView textView5 = findViewById(R.id.row2MAC);
-        textView5.setText("" + two.BSSID);
+        textView5.setText("" + two.BSSID + " / " + two.frequency);
         TextView textView6 = findViewById(R.id.row2Strength);
         textView6.setText("" + two.level);
 
@@ -74,7 +78,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView7 = findViewById(R.id.row3Name);
         textView7.setText(three.SSID);
         TextView textView8 = findViewById(R.id.row3MAC);
-        textView8.setText("" + three.BSSID);
+        textView8.setText("" + three.BSSID + " / " + three.frequency);
         TextView textView9 = findViewById(R.id.row3Strength);
         textView9.setText("" + three.level);
 
@@ -82,7 +86,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView10 = findViewById(R.id.row4Name);
         textView10.setText(four.SSID);
         TextView textView11 = findViewById(R.id.row4MAC);
-        textView11.setText("" + four.BSSID);
+        textView11.setText("" + four.BSSID + " / " + four.frequency);
         TextView textView12 = findViewById(R.id.row4Strength);
         textView12.setText("" + four.level);
 
@@ -90,7 +94,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView13 = findViewById(R.id.row5Name);
         textView13.setText(five.SSID);
         TextView textView14 = findViewById(R.id.row5MAC);
-        textView14.setText("" + five.BSSID);
+        textView14.setText("" + five.BSSID + " / " + five.frequency);
         TextView textView15 = findViewById(R.id.row5Strength);
         textView15.setText("" + five.level);
 
@@ -98,7 +102,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView16 = findViewById(R.id.row6Name);
         textView16.setText(six.SSID);
         TextView textView17 = findViewById(R.id.row6MAC);
-        textView17.setText("" + six.BSSID);
+        textView17.setText("" + six.BSSID + " / " + six.frequency);
         TextView textView18 = findViewById(R.id.row6Strength);
         textView18.setText("" + six.level);
 
@@ -106,7 +110,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView19 = findViewById(R.id.row7Name);
         textView19.setText(seven.SSID);
         TextView textView20 = findViewById(R.id.row7MAC);
-        textView20.setText("" + seven.BSSID);
+        textView20.setText("" + seven.BSSID + " / " + seven.frequency);
         TextView textView21 = findViewById(R.id.row7Strength);
         textView21.setText("" + seven.level);
 
@@ -114,7 +118,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView22 = findViewById(R.id.row8Name);
         textView22.setText(eight.SSID);
         TextView textView23 = findViewById(R.id.row8MAC);
-        textView23.setText("" + eight.BSSID);
+        textView23.setText("" + eight.BSSID + " / " + eight.frequency);
         TextView textView24 = findViewById(R.id.row8Strength);
         textView24.setText("" + eight.level);
 
@@ -122,7 +126,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView25 = findViewById(R.id.row9Name);
         textView25.setText(nine.SSID);
         TextView textView26 = findViewById(R.id.row9MAC);
-        textView26.setText("" + nine.BSSID);
+        textView26.setText("" + nine.BSSID + " / " + nine.frequency);
         TextView textView27 = findViewById(R.id.row9Strength);
         textView27.setText("" + nine.level);
 
@@ -130,7 +134,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView28 = findViewById(R.id.row10Name);
         textView28.setText(ten.SSID);
         TextView textView29 = findViewById(R.id.row10MAC);
-        textView29.setText("" + ten.BSSID);
+        textView29.setText("" + ten.BSSID + " / " + ten.frequency);
         TextView textView30 = findViewById(R.id.row10Strength);
         textView30.setText("" + ten.level);
 
