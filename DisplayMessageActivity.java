@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class DisplayMessageActivity extends AppCompatActivity {
 
@@ -21,7 +23,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
-        List<ScanResult> test = MainActivity.results;
+        ArrayList<WifiSignal> unorderedSignals = MainActivity.WifiOutput;
+        ArrayList<WifiSignal> signals = new ArrayList<WifiSignal>();
 
         // Capture the layout's TextView and set the string as its text
 
@@ -36,7 +39,22 @@ public class DisplayMessageActivity extends AppCompatActivity {
         textView.setText("" + row);*/
         //}
 
-        ScanResult one = test.get(0);
+
+        WifiSignal highest;
+        for (WifiSignal x: unorderedSignals){
+            highest = x;
+            for (WifiSignal y: unorderedSignals){
+                //If the value is greater than y's and it isn't in signals already
+                if (highest.level < y.level && !signals.contains(y)){
+                    highest = y;
+                } else {
+                    continue;
+                }
+            }
+            signals.add(highest);
+        }
+
+        WifiSignal one = signals.get(0);
         TextView textView1 = findViewById(R.id.row1Name);
         textView1.setText(one.SSID);
         TextView textView2 = findViewById(R.id.row1MAC);
@@ -44,7 +62,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView3 = findViewById(R.id.row1Strength);
         textView3.setText("" + one.level);
 
-        ScanResult two = test.get(1);
+        WifiSignal two = signals.get(1);
         TextView textView4 = findViewById(R.id.row2Name);
         textView4.setText(two.SSID);
         TextView textView5 = findViewById(R.id.row2MAC);
@@ -52,7 +70,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView6 = findViewById(R.id.row2Strength);
         textView6.setText("" + two.level);
 
-        ScanResult three = test.get(2);
+        WifiSignal three = signals.get(2);
         TextView textView7 = findViewById(R.id.row3Name);
         textView7.setText(three.SSID);
         TextView textView8 = findViewById(R.id.row3MAC);
@@ -60,7 +78,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView9 = findViewById(R.id.row3Strength);
         textView9.setText("" + three.level);
 
-        ScanResult four = test.get(3);
+        WifiSignal four = signals.get(3);
         TextView textView10 = findViewById(R.id.row4Name);
         textView10.setText(four.SSID);
         TextView textView11 = findViewById(R.id.row4MAC);
@@ -68,7 +86,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView12 = findViewById(R.id.row4Strength);
         textView12.setText("" + four.level);
 
-        ScanResult five = test.get(4);
+        WifiSignal five = signals.get(4);
         TextView textView13 = findViewById(R.id.row5Name);
         textView13.setText(five.SSID);
         TextView textView14 = findViewById(R.id.row5MAC);
@@ -76,7 +94,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView15 = findViewById(R.id.row5Strength);
         textView15.setText("" + five.level);
 
-        ScanResult six = test.get(5);
+        WifiSignal six = signals.get(5);
         TextView textView16 = findViewById(R.id.row6Name);
         textView16.setText(six.SSID);
         TextView textView17 = findViewById(R.id.row6MAC);
@@ -84,7 +102,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView18 = findViewById(R.id.row6Strength);
         textView18.setText("" + six.level);
 
-        ScanResult seven = test.get(6);
+        WifiSignal seven = signals.get(6);
         TextView textView19 = findViewById(R.id.row7Name);
         textView19.setText(seven.SSID);
         TextView textView20 = findViewById(R.id.row7MAC);
@@ -92,7 +110,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView21 = findViewById(R.id.row7Strength);
         textView21.setText("" + seven.level);
 
-        ScanResult eight = test.get(7);
+        WifiSignal eight = signals.get(7);
         TextView textView22 = findViewById(R.id.row8Name);
         textView22.setText(eight.SSID);
         TextView textView23 = findViewById(R.id.row8MAC);
@@ -100,7 +118,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView24 = findViewById(R.id.row8Strength);
         textView24.setText("" + eight.level);
 
-        ScanResult nine = test.get(8);
+        WifiSignal nine = signals.get(8);
         TextView textView25 = findViewById(R.id.row9Name);
         textView25.setText(nine.SSID);
         TextView textView26 = findViewById(R.id.row9MAC);
@@ -108,7 +126,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         TextView textView27 = findViewById(R.id.row9Strength);
         textView27.setText("" + nine.level);
 
-        ScanResult ten = test.get(9);
+        WifiSignal ten = signals.get(9);
         TextView textView28 = findViewById(R.id.row10Name);
         textView28.setText(ten.SSID);
         TextView textView29 = findViewById(R.id.row10MAC);
