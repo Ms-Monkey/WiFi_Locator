@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.concurrent.TimeUnit;import android.app.Application;
 import android.content.Context;
 import java.util.ArrayList;
@@ -31,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private Button buttonScan;
     private int size = 0;
-    private List<ScanResult> results;
+    public static List<ScanResult> results;
     private ArrayList<String> arrayList = new ArrayList<>();
+    public static ArrayList<WifiSignal> WifiOutput = new ArrayList<>();
     private ArrayAdapter adapter;
 
     @Override
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setContentView(R.layout.activity_main);
-                TextView tv1 = (TextView)findViewById(R.id.wifiOutput);
+                TextView tv1 = (TextView) findViewById(R.id.wifiOutput);
                 tv1.setText("henlo");
                 scanWifi();
             }
@@ -67,9 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(adapter);
+        scanWifi();
     }
 
-    private void scanWifi() {
+    public void scanWifi() {
         arrayList.clear();
         registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         Toast.makeText(this, "Scanning WiFi ...", Toast.LENGTH_SHORT).show();
@@ -85,103 +88,51 @@ public class MainActivity extends AppCompatActivity {
             unregisterReceiver(this);
 
             setContentView(R.layout.activity_main);
-            TextView tv1 = (TextView)findViewById(R.id.wifiOutput);
+            TextView tv1 = (TextView) findViewById(R.id.wifiOutput);
 
             tv1.setText("lemme see them signals >:) " + results.size());
 
             for (ScanResult scanResult : results) {
+                //Create Wifi Object, add to it's ordered list
+                WifiSignal test = new WifiSignal(scanResult.SSID, scanResult.BSSID, scanResult.level);
+                WifiOutput.add(test);
+
                 arrayList.add(scanResult.SSID + " - " + scanResult.capabilities);
                 adapter.notifyDataSetChanged();
             }
-            
+
             String topThree = "";
 
             int x = 0;
-            for(ScanResult temp: results){
-                if (x >= 3){ break; }
-                if (temp.level > -75){
+            for (ScanResult temp : results) {
+                if (x >= 3) {
+                    break;
+                }
+                if (temp.level > -75) {
                     topThree += ("Name:     " + temp.SSID + "\nMAC:       " + temp.BSSID + "\nStrength: " + temp.level + "dB\n\n");
                     x++;
                 }
             }
             tv1.setText(topThree);
             //ListView test = (TextView)findViewById(R.id.wifiList);
-            
+
             //ArrayAdapter
             //NotifyUpdate
-        };
+        }
+
+        ;
     };
 
     /*This creates an instance of activity_display_message*/
     public void sendMessage(View view) {
         //Get the table
         //table = (TableLayout_find)ViewById(R.id.myTable);
-
-
         Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.editText);
-        String message = editText.getText().toString();
+        String message = "";
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
+
+
+
 }
-
- /*   @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //enableWifi(this);
-        //scanWifiSignal(this);
-
-    }
-
-
-    private void enableWifi(Context context){
-        context = this;
-        WifiManager wifiManager = (WifiManager)
-                    context.getSystemService(Context.WIFI_SERVICE);
-        if (!wifiManager.isWifiEnabled()) {
-            Toast.makeText(this, "WiFi is disabled, enabling...", Toast.LENGTH_LONG).show();
-            wifiManager.setWifiEnabled(true);
-
-        }
-        Toast.makeText(this, "WiFi enabled", Toast.LENGTH_LONG).show();
-
-    }
-
-
-    private void scanWifiSignal(Context context){
-        Toast.makeText(this, "starting scan", Toast.LENGTH_LONG).show();
-        context = this;
-        WifiManager wifiManager = (WifiManager)
-                context.getSystemService(Context.WIFI_SERVICE);
-
-
-        registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-        wifiManager.startScan();
-        Toast.makeText(this, "Scanning WiFi ...", Toast.LENGTH_SHORT).show();
-
-
-        //List<ScanResult> ScanResults = wifiManager.getScanResults();
-        int signalLevel = 0;
-        for (ScanResult result : ScanResults) {
-            signalLevel = result.level;
-        }
-        setContentView(R.layout.activity_main);
-        TextView tv1 = (TextView)findViewById(R.id.wifiOutput);
-        tv1.setText(signalLevel);
-
-    }
-
-
-
-
-    public void sendMessage(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.editText);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-    }
-}
-*/
