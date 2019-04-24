@@ -146,14 +146,59 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public int contains_MAC(String MAC){
-        for (Router x : Floor2) {
+        for (Router w: Floor1){
+            if(w.BSSID.equals(MAC)){ return 1; }
+        }
+        for (Router x : Floor2){
             if(x.BSSID.equals(MAC)){ return 2; }
+        }
+        for (Router y: Floor3){
+            if(y.BSSID.equals(MAC)){ return 3; }
         }
 
         return 0;
     }
 
     public void initiate_routers(){
+        Floor1.add(new Router(1, 42, 1, "CO159", "70:70:8b:d3:5e:60"));
+        Floor1.add(new Router(1, 42, 1, "CO159", "70:70:8b:d3:5e:61"));
+
+        Floor1.add(new Router(7, 42, 1, "CO151", "70:70:8b:be:01:a1"));
+        Floor1.add(new Router(7, 42, 1, "CO151", "70:70:8b:be:01:a6"));
+
+        Floor1.add(new Router(22, 40, 1, "CO143", "70:70:8b:d3:5b:6e"));
+        Floor1.add(new Router(22, 40, 1, "CO143", "70:70:8b:d3:5b:6f"));
+
+        Floor1.add(new Router(32, 37, 1, "CO141", "70:70:8b:ce:29:40"));
+        Floor1.add(new Router(32, 37, 1, "CO141", "70:70:8b:ce:29:41"));
+
+        Floor1.add(new Router(44, 37, 1, "CO121", "00:2c:c8:cc:30:80"));
+        Floor1.add(new Router(44, 37, 1, "CO121", "00:2c:c8:cc:30:81"));
+        Floor1.add(new Router(44, 37, 1, "CO121", "00:2c:c8:cc:30:86"));
+
+        Floor1.add(new Router(67, 37, 1, "CO110", "70:70:8b:be:0c:8e"));
+        Floor1.add(new Router(67, 37, 1, "CO110", "70:70:8b:be:0c:8f"));
+
+        Floor1.add(new Router(80, 10, 1, "CO105", "b0:8b:cf:27:7b:c0"));
+        Floor1.add(new Router(80, 10, 1, "CO105", "b0:8b:cf:27:7b:c1"));
+        Floor1.add(new Router(80, 10, 1, "CO105", "b0:8b:cf:27:7b:ce"));//5G
+        Floor1.add(new Router(80, 10, 1, "CO105", "b0:8b:cf:27:7b:cf"));
+
+        Floor1.add(new Router(52, 32, 1, "CO122", "54:92:74:d2:34:70"));
+        Floor1.add(new Router(52, 32, 1, "CO122", "54:92:74:d2:34:71"));
+
+        Floor1.add(new Router(52, 25, 1, "COLT122", "e8:65:49:40:0c:10"));
+        Floor1.add(new Router(52, 25, 1, "COLT122", "e8:65:49:40:0c:11"));
+
+        Floor1.add(new Router(30, 5, 1, "CO126", "bc:26:c7:40:c0:00"));
+        Floor1.add(new Router(30, 5, 1, "CO126", "bc:26:c7:40:c0:01"));
+
+        Floor1.add(new Router(20, 5, 1, "CO132", "b0:8b:cf:35:2f:ce"));
+        Floor1.add(new Router(20, 5, 1, "CO132", "b0:8b:cf:35:2f:cf"));
+
+        Floor1.add(new Router(-5, 12, 1, "CO154", "00:92:ee:d3:80:ae"));
+        Floor1.add(new Router(-5, 12, 1, "CO154", "00:92:ee:d3:80:af"));
+
         //Create a bunch of routers, add them to their respective floor arrays
         Floor2.add(new Router(6, 5, 2, "CO258", "70:6d:15:3B:91:80"));  //MIGHT BE 5b not 100%
         Floor2.add(new Router(6, 5, 2, "CO258", "70:6d:15:3B:91:81"));
@@ -185,6 +230,39 @@ public class MainActivity extends AppCompatActivity {
 
         Floor2.add(new Router(32, 5, 2, "CO232", "70:6d:15:40:56:0e"));
         Floor2.add(new Router(32, 5, 2, "CO232", "70:6d:15:40:56:0f"));
+
+        Floor3.add(new Router(5, 4, 3, "CO337", "70:6d:15:36:b6:2e"));
+        Floor3.add(new Router(5, 4, 3, "CO337", "70:6d:15:36:b6:2f"));
+
+        Floor3.add(new Router(2, 6, 3, "CO365", "bc:26:c7:94:91:40"));
+        Floor3.add(new Router(2, 6, 3, "CO365", "bc:26:c7:94:91:41"));
+        Floor3.add(new Router(2, 6, 3, "CO365", "bc:26:c7:94:91:46"));
+
+        Floor3.add(new Router(32, 37, 3, "CO329", "70:6d:15:16:6c:20"));
+        Floor3.add(new Router(32, 37, 3, "CO329", "70:6d:15:16:6c:21"));
+
+        Floor3.add(new Router(10, 37, 3, "CO352", "70:6d:15:40:35:c0"));
+        Floor3.add(new Router(10, 37, 3, "CO352", "70:6d:15:40:35:c1"));
+        Floor3.add(new Router(10, 37, 3, "CO352", "70:6d:15:40:35:ce"));//5G
+        Floor3.add(new Router(10, 37, 3, "CO352", "70:6d:15:40:35:cf"));
+
+        Floor3.add(new Router(32, 42, 3, "CO334", "70:6d:15:48:15:2e"));
+        Floor3.add(new Router(32, 42, 3, "CO334", "70:6d:15:48:15:2f"));
+
+        Floor3.add(new Router(43, 5, 3, "CO319", "70:6d:15:3b:a2:60"));
+        Floor3.add(new Router(43, 5, 3, "CO319", "70:6d:15:3b:a2:61"));
+        Floor3.add(new Router(43, 5, 3, "CO319", "70:6d:15:3b:a2:6e"));//5G
+        Floor3.add(new Router(43, 5, 3, "CO319", "70:6d:15:3b:a2:6f"));
+
+        Floor3.add(new Router(62, 10, 3, "CO310", "e8:65:49:10:00:df"));
+        Floor3.add(new Router(62, 10, 3, "CO310", "e8:65:49:10:00:d9"));
+
+        Floor3.add(new Router(80, 11, 3, "CO304", "70:6d:15:05:be:40"));
+        Floor3.add(new Router(80, 11, 3, "CO304", "70:6d:15:05:be:41"));
+        Floor3.add(new Router(80, 11, 3, "CO304", "70:6d:15:05:be:46"));
+        
+        Floor4.add(new Router());
+
     }
 
 
