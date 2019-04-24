@@ -1,5 +1,6 @@
 package com.example.sorensjone.test;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("OUTPUT", "HENLO");
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+
         buttonScan = findViewById(R.id.scanBtn);
         buttonScan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +81,10 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(adapter);
+
+        initiate_routers();
         scanWifi();
+
     }
 
     public void scanWifi() {
@@ -101,15 +109,16 @@ public class MainActivity extends AppCompatActivity {
 
             for (ScanResult scanResult : results) {
                 //Create Wifi Object, add to it's ordered list
-                WifiSignal test = new WifiSignal(scanResult.SSID, scanResult.BSSID, scanResult.level);
+                int floor = contains_MAC(scanResult.BSSID);
+                WifiSignal test = new WifiSignal(scanResult.SSID, scanResult.BSSID, scanResult.level, scanResult.frequency, floor);
                 WifiOutput.add(test);
+
 
                 arrayList.add(scanResult.SSID + " - " + scanResult.capabilities);
                 adapter.notifyDataSetChanged();
             }
 
             String topThree = "";
-
             int x = 0;
             for (ScanResult temp : results) {
                 if (x >= 3) {
@@ -121,10 +130,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             tv1.setText(topThree);
-            //ListView test = (TextView)findViewById(R.id.wifiList);
-
-            //ArrayAdapter
-            //NotifyUpdate
         }
 
         ;
@@ -140,6 +145,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public int contains_MAC(String MAC){
+        for (Router x : Floor2) {
+            if(x.BSSID.equals(MAC)){ return 2; }
+        }
+
+        return 0;
+    }
 
     public void initiate_routers(){
         //Create a bunch of routers, add them to their respective floor arrays
@@ -168,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         Floor2.add(new Router(30, 7, 2, "CO225", "70:b3:17:d5:37:e1"));
 
         Floor2.add(new Router(46, 10, 2, "CO228", "70:b3:17:d5:34:40"));
+        Floor2.add(new Router(46, 10, 2, "CO228", "70:b3:17:d5:34:41"));
         Floor2.add(new Router(46, 10, 2, "CO228", "70:b3:17:d5:34:46"));
 
         Floor2.add(new Router(32, 5, 2, "CO232", "70:6d:15:40:56:0e"));
