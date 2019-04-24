@@ -13,15 +13,15 @@ import static android.support.v4.content.ContextCompat.getSystemService;
 
 public class WifiSignal{
     public String SSID, BSSID;
-    public int level, frequency;
+    public int level, frequency, floor;
     public String distance;
 
-    public WifiSignal(String name, String mac, int strength, int frequency) {
+    public WifiSignal(String name, String mac, int strength, int frequency, int floor) {
         this.SSID = name;
         this.BSSID = mac;
         this.level = strength;
         this.frequency = frequency;
-
+        this.floor = floor;
 
         //https://stackoverflow.com/questions/11217674/how-to-calculate-distance-from-wifi-router-using-signal-strength
         double exp = (27.55 - (20 * Math.log10(frequency)) + Math.abs(strength)) / 20.0;
