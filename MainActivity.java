@@ -260,8 +260,22 @@ public class MainActivity extends AppCompatActivity {
         Floor3.add(new Router(80, 11, 3, "CO304", "70:6d:15:05:be:40"));
         Floor3.add(new Router(80, 11, 3, "CO304", "70:6d:15:05:be:41"));
         Floor3.add(new Router(80, 11, 3, "CO304", "70:6d:15:05:be:46"));
-        
-        Floor4.add(new Router());
+
+        Floor4.add(new Router(80, 6, 4, "CO407", "70:6d:15:40:c9:40"));
+        Floor4.add(new Router(80, 6, 4, "CO407", "70:6d:15:40:c9:41"));
+        Floor4.add(new Router(80, 6, 4, "CO407", "70:6d:15:40:c9:46"));
+        Floor4.add(new Router(80, 6, 4, "CO407", "70:6d:15:40:c9:49"));
+
+        Floor4.add(new Router(55, 12, 4, "CO418", "70:6d:15:35:42:00")); //2.462G
+        Floor4.add(new Router(55, 12, 4, "CO418", "70:6d:15:35:42:01"));
+
+        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:53:32:e0"));//2.412G
+        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:53:32:ee"));//5.745G
+        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:53:32:ef"));
+
+        Floor4.add(new Router(12, 12, 4, "CO435", "70:6d:15:40:cd:60"));//2.412G
+        Floor4.add(new Router(12, 12, 4, "CO435", "70:6d:15:40:cd:61"));
+        Floor4.add(new Router(12, 12, 4, "CO435", "70:6d:15:40:cd:66"));
 
     }
 
