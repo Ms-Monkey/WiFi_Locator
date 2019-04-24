@@ -119,16 +119,34 @@ public class MainActivity extends AppCompatActivity {
             }
 
             String topThree = "";
-            int x = 0;
-            for (ScanResult temp : results) {
-                if (x >= 3) {
+            ArrayList<ScanResult> highest = new ArrayList<ScanResult>();
+            ScanResult highestSignal;
+            int counter = 0;
+            for (ScanResult x : results) {
+                if (counter >= 3) {
                     break;
                 }
-                if (temp.level > -75) {
-                    topThree += ("Name:     " + temp.SSID + "\nMAC:       " + temp.BSSID + "\nStrength: " + temp.level + "dB\n\n");
-                    x++;
+                if(highest.contains(x)){
+                    continue;
                 }
+                highestSignal = x;
+
+                for (ScanResult y: results){
+                    if(highest.contains(y)){
+                        continue;
+                    }
+                    if (highestSignal.level < y.level){
+                        highestSignal = y;
+                    }
+                }
+                highest.add(highestSignal);
+                counter++;
+
             }
+            for (ScanResult temp: highest) {
+                topThree += ("Name:     " + temp.SSID + "\nMAC:       " + temp.BSSID + "\nStrength: " + temp.level + "dB\n\n");
+            }
+
             tv1.setText(topThree);
         }
 
