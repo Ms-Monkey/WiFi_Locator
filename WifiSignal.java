@@ -22,6 +22,8 @@ public class WifiSignal{
         this.level = strength;
         this.frequency = frequency;
 
+
+        //https://stackoverflow.com/questions/11217674/how-to-calculate-distance-from-wifi-router-using-signal-strength
         double exp = (27.55 - (20 * Math.log10(frequency)) + Math.abs(strength)) / 20.0;
         exp = Math.pow(10.0, exp);
         int test = (int) exp;
