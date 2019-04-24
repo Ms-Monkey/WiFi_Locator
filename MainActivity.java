@@ -193,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
         Floor1.add(new Router(30, 5, 1, "CO126", "bc:26:c7:40:c0:00"));
         Floor1.add(new Router(30, 5, 1, "CO126", "bc:26:c7:40:c0:01"));
 
+        Floor1.add(new Router(20, 5, 1, "CO132", "b0:8b:cf:35:2f:c1")); //Not 100% sure
         Floor1.add(new Router(20, 5, 1, "CO132", "b0:8b:cf:35:2f:ce"));
         Floor1.add(new Router(20, 5, 1, "CO132", "b0:8b:cf:35:2f:cf"));
 
@@ -223,6 +224,7 @@ public class MainActivity extends AppCompatActivity {
 
         Floor2.add(new Router(30, 7, 2, "CO225", "70:b3:17:d5:37:e0"));
         Floor2.add(new Router(30, 7, 2, "CO225", "70:b3:17:d5:37:e1"));
+        Floor2.add(new Router(30, 7, 2, "CO225", "70:b3:17:d5:37:e6")); //Not 100% sure
 
         Floor2.add(new Router(46, 10, 2, "CO228", "70:b3:17:d5:34:40"));
         Floor2.add(new Router(46, 10, 2, "CO228", "70:b3:17:d5:34:41"));
@@ -230,6 +232,10 @@ public class MainActivity extends AppCompatActivity {
 
         Floor2.add(new Router(32, 5, 2, "CO232", "70:6d:15:40:56:0e"));
         Floor2.add(new Router(32, 5, 2, "CO232", "70:6d:15:40:56:0f"));
+
+        Floor2.add(new Router(57, 11, 2, "CO221", "00:d7:8f:f3:95:80"));
+        Floor2.add(new Router(57, 11, 2, "CO221", "00:d7:8f:f3:95:86"));
+        Floor2.add(new Router(57, 11, 2, "CO221", "00:d7:8f:f3:95:8f"));
 
         Floor3.add(new Router(5, 4, 3, "CO337", "70:6d:15:36:b6:2e"));
         Floor3.add(new Router(5, 4, 3, "CO337", "70:6d:15:36:b6:2f"));
@@ -253,6 +259,9 @@ public class MainActivity extends AppCompatActivity {
         Floor3.add(new Router(43, 5, 3, "CO319", "70:6d:15:3b:a2:61"));
         Floor3.add(new Router(43, 5, 3, "CO319", "70:6d:15:3b:a2:6e"));//5G
         Floor3.add(new Router(43, 5, 3, "CO319", "70:6d:15:3b:a2:6f"));
+
+
+        Floor3.add(new Router(43, 5, 3, "CO319", "70:6d:15:3b:a2:66"));//Not 100% on this
 
         Floor3.add(new Router(62, 10, 3, "CO310", "e8:65:49:10:00:df"));
         Floor3.add(new Router(62, 10, 3, "CO310", "e8:65:49:10:00:d9"));
