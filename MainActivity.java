@@ -89,11 +89,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void scanWifi() {
         arrayList.clear();
+        WifiOutput.clear();
         registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         Toast.makeText(this, "Scanning WiFi ...", Toast.LENGTH_SHORT).show();
-        println("Starting scan");
         wifiManager.startScan();
-        println("Scan completed");
     }
 
     BroadcastReceiver wifiReceiver = new BroadcastReceiver() {
@@ -112,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
                 int floor = contains_MAC(scanResult.BSSID);
                 WifiSignal test = new WifiSignal(scanResult.SSID, scanResult.BSSID, scanResult.level, scanResult.frequency, floor);
                 WifiOutput.add(test);
-
 
                 arrayList.add(scanResult.SSID + " - " + scanResult.capabilities);
                 adapter.notifyDataSetChanged();
