@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     public static List<ScanResult> results;
     private ArrayList<String> arrayList = new ArrayList<>();
     public static ArrayList<WifiSignal> WifiOutput = new ArrayList<>();
+    public static ArrayList<WifiSignal> signals = new ArrayList<>();
 
     //Routers by floor, used to ignore other floors signals
     public static ArrayList<Router> Floor1 = new ArrayList<>();
@@ -85,7 +87,40 @@ public class MainActivity extends AppCompatActivity {
         initiate_routers();
         scanWifi();
 
+        Toast.makeText(this, "Done scanning", Toast.LENGTH_LONG).show();
+        ImageView imageOne = findViewById(R.id.imageView1);
+        ImageView imageTwo = findViewById(R.id.imageView2);
+        ImageView imageThree = findViewById(R.id.imageView3);
+        ImageView imageFour = findViewById(R.id.imageView4);
+
+        imageOne.setVisibility(View.INVISIBLE);
+        imageTwo.setVisibility(View.VISIBLE);
+        imageThree.setVisibility(View.INVISIBLE);
+        imageFour.setVisibility(View.INVISIBLE);
     }
+
+
+    public void order_signals(){
+        signals.clear();
+        WifiSignal highest;
+        for (WifiSignal x: WifiOutput){
+            highest = x;
+            if (signals.contains(x)){
+                continue;
+            }
+
+            for (WifiSignal y: WifiOutput){
+                //If the value is greater than y's and it isn't in signals already
+                if (highest.level < y.level && !signals.contains(y)){
+                    highest = y;
+                } else {
+                    continue;
+                }
+            }
+            signals.add(highest);
+        }
+    }
+
 
     public void scanWifi() {
         arrayList.clear();
@@ -101,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
             results = wifiManager.getScanResults();
             unregisterReceiver(this);
 
-            setContentView(R.layout.activity_main);
             TextView tv1 = (TextView) findViewById(R.id.wifiOutput);
 
             tv1.setText("lemme see them signals >:)");
@@ -115,10 +149,10 @@ public class MainActivity extends AppCompatActivity {
                 arrayList.add(scanResult.SSID + " - " + scanResult.capabilities);
                 adapter.notifyDataSetChanged();
             }
-
+            order_signals();
         }
-
     };
+
 
     /*This creates an instance of activity_display_message*/
     public void sendMessage(View view) {
@@ -129,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
     }
+
 
     public int contains_MAC(String MAC){
         for (Router w: Floor1){
@@ -143,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
         return 0;
     }
+
 
     public void initiate_routers(){
         Floor1.add(new Router(1, 42, 1, "CO159", "70:70:8b:d3:5e:60"));
