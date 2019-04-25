@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_main);
             TextView tv1 = (TextView) findViewById(R.id.wifiOutput);
 
-            tv1.setText("lemme see them signals >:) " + results.size());
+            tv1.setText("lemme see them signals >:)");
 
             for (ScanResult scanResult : results) {
                 //Create Wifi Object, add to it's ordered list
@@ -116,39 +116,8 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
 
-            String topThree = "";
-            ArrayList<ScanResult> highest = new ArrayList<ScanResult>();
-            ScanResult highestSignal;
-            int counter = 0;
-            for (ScanResult x : results) {
-                if (counter >= 3) {
-                    break;
-                }
-                if(highest.contains(x)){
-                    continue;
-                }
-                highestSignal = x;
-
-                for (ScanResult y: results){
-                    if(highest.contains(y)){
-                        continue;
-                    }
-                    if (highestSignal.level < y.level){
-                        highestSignal = y;
-                    }
-                }
-                highest.add(highestSignal);
-                counter++;
-
-            }
-            for (ScanResult temp: highest) {
-                topThree += ("Name:     " + temp.SSID + "\nMAC:       " + temp.BSSID + "\nStrength: " + temp.level + "dB\n\n");
-            }
-
-            tv1.setText(topThree);
         }
 
-        ;
     };
 
     /*This creates an instance of activity_display_message*/
