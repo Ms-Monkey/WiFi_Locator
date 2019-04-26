@@ -5,14 +5,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +39,7 @@ import java.util.concurrent.TimeUnit;import android.app.Application;
 import android.content.Context;
 import java.util.ArrayList;
 
+import static java.lang.System.exit;
 import static java.sql.DriverManager.println;
 
 public class MainActivity extends AppCompatActivity {
@@ -58,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("OUTPUT", "HENLO");
 
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
 
@@ -112,20 +118,20 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-        floor = 4;
+
         if(floor == 1){
             imageOne.setVisibility(View.VISIBLE);
             imageTwo.setVisibility(View.INVISIBLE);
             imageThree.setVisibility(View.INVISIBLE);
             imageFour.setVisibility(View.INVISIBLE);
             //Draw the routers
-            //draw_routers(Floor1);
+            draw_routers(Floor1);
         } else if (floor == 2){
             imageOne.setVisibility(View.INVISIBLE);
             imageTwo.setVisibility(View.VISIBLE);
             imageThree.setVisibility(View.INVISIBLE);
             imageFour.setVisibility(View.INVISIBLE);
-            //draw_routers(Floor2);
+            draw_routers(Floor2);
         } else if (floor == 3){
             imageOne.setVisibility(View.INVISIBLE);
             imageTwo.setVisibility(View.INVISIBLE);
@@ -138,6 +144,43 @@ public class MainActivity extends AppCompatActivity {
             imageThree.setVisibility(View.INVISIBLE);
             imageFour.setVisibility(View.VISIBLE);
             //draw_routers(Floor4);
+        }
+    }
+
+    public void draw_routers(ArrayList<Router> floor){
+        //Only draw the routers that it picks up, different colour for different floor routers
+        Toast.makeText(this, "Drawing routers", Toast.LENGTH_LONG).show();
+        CanvasView test = new CanvasView(this);
+        setContentView(test);
+    }
+    //Thanks to this: http://www.coderzheaven.com/2016/12/17/introduction-to-android-canvas-simple-example/
+    private class CanvasView extends View {
+        public CanvasView(Context context) {
+            super(context);
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            super.onDraw(canvas);
+            // make the entire canvas white
+            /*paint.setColor(Color.WHITE);
+            canvas.drawPaint(paint);*/
+
+            Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton2);
+            Paint paint = new Paint();
+            paint.setStyle(Paint.Style.FILL);
+            Rect source = new Rect(0, 0, 1100, 1400);
+            canvas.drawBitmap(bMap, null, source, paint);
+
+            int initX = 200, initY = 200, radius = 15, rectWidth = 500, rectHeight = 400;
+
+            // draw blue circle with anti aliasing turned on
+            paint.setAntiAlias(true);
+            paint.setColor(Color.BLUE);
+            canvas.drawCircle(initX, initY, radius, paint);
+
+            if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
+                canvas.restore();
         }
     }
 
