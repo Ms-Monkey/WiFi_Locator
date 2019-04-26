@@ -120,10 +120,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(floor == 1){
-            imageOne.setVisibility(View.VISIBLE);
+            /*imageOne.setVisibility(View.VISIBLE);
             imageTwo.setVisibility(View.INVISIBLE);
             imageThree.setVisibility(View.INVISIBLE);
-            imageFour.setVisibility(View.INVISIBLE);
+            imageFour.setVisibility(View.INVISIBLE);*/
             //Draw the routers
             draw_routers(Floor1);
         } else if (floor == 2){
@@ -149,30 +149,54 @@ public class MainActivity extends AppCompatActivity {
 
     public void draw_routers(ArrayList<Router> floor){
         //Only draw the routers that it picks up, different colour for different floor routers
+        int floor_number = 4;
         Toast.makeText(this, "Drawing routers", Toast.LENGTH_LONG).show();
-        CanvasView test = new CanvasView(this);
+        CanvasView test = new CanvasView(this, floor_number, floor);
         setContentView(test);
     }
     //Thanks to this: http://www.coderzheaven.com/2016/12/17/introduction-to-android-canvas-simple-example/
     private class CanvasView extends View {
-        public CanvasView(Context context) {
+        private ArrayList<Router> routers = new ArrayList<>();
+        private int floor;
+        public CanvasView(Context context, int floor_number, ArrayList<Router> floor) {
             super(context);
+            this.routers = floor;
+            this.floor = floor_number;
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
+            int initX = 200, initY = 200, radius = 15, rectWidth = 500, rectHeight = 400;
             // make the entire canvas white
             /*paint.setColor(Color.WHITE);
             canvas.drawPaint(paint);*/
 
-            Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton2);
             Paint paint = new Paint();
-            paint.setStyle(Paint.Style.FILL);
-            Rect source = new Rect(0, 0, 1100, 1400);
-            canvas.drawBitmap(bMap, null, source, paint);
+            if (floor == 1){
+                Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton1);
+                Rect source = new Rect(0, 0, 1100, 1400);
+                canvas.drawBitmap(bMap, null, source, paint);
+            } else if (floor == 2){
+                Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton2);
+                Rect source = new Rect(0, 0, 1100, 1400);
+                canvas.drawBitmap(bMap, null, source, paint);
+            } else if (floor == 3){
+                Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton3);
+                Rect source = new Rect(0, 0, 1100, 1400);
+                canvas.drawBitmap(bMap, null, source, paint);
+            } else if (floor == 4){
+                Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton4);
+                Rect source = new Rect(0, 0, 600, 1400);
+                canvas.drawBitmap(bMap, null, source, paint);
+            } else {
+                paint.setStyle(Paint.Style.FILL);
+                paint.setColor(Color.GREEN);
+                paint.setTextSize(40);
+                canvas.drawText("Can't find the floor you are on, please check you are in the correct dimension", initX, initY + 600, paint);
+            }
+            //paint.setStyle(Paint.Style.FILL);
 
-            int initX = 200, initY = 200, radius = 15, rectWidth = 500, rectHeight = 400;
 
             // draw blue circle with anti aliasing turned on
             paint.setAntiAlias(true);
