@@ -167,49 +167,65 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            int radius = 15;
-            // make the entire canvas white
-            /*paint.setColor(Color.WHITE);
-            canvas.drawPaint(paint);*/
-            floor = 4;
-            Paint paint = new Paint();
+            int radius = 15, offsetX, offsetY;
             String floor_string;
+            Paint paint = new Paint();
+
+            // make the entire canvas white
+            paint.setColor(Color.WHITE);
+            canvas.drawPaint(paint);
+            floor = 4;
+
             if (floor == 1){
                 //https://stackoverflow.com/questions/21082184/canvas-drawbitmap-is-not-drawing-anything
                 Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton1);
                 Rect source = new Rect(-20, 0, 950, 1435);
                 canvas.drawBitmap(bMap, null, source, paint);
                 floor_string = "You are on the first floor, congratulations";
+                offsetX = 135;
+                offsetY = 55;
             } else if (floor == 2){
                 Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton2);
                 Rect source = new Rect(0, 0, 900, 1400);
                 canvas.drawBitmap(bMap, null, source, paint);
                 floor_string = "You are on the second floor, congratulations";
+                offsetX = 65;
+                offsetY = 30;
             } else if (floor == 3){
                 Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton3);
                 Rect source = new Rect(0, 0, 930, 1410);
                 canvas.drawBitmap(bMap, null, source, paint);
                 floor_string = "You are on the third floor, congratulations";
+                offsetX = 130;
+                offsetY = 40;
             } else if (floor == 4){
                 Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton4);
                 Rect source = new Rect(-30, 0, 520, 1390);
                 canvas.drawBitmap(bMap, null, source, paint);
                 floor_string = "You are on the fourth floor, congratulations";
+                offsetX = 160;
+                offsetY = 30;
             } else {
                 floor_string = "Unable to find floor, please check you are in the correct dimension and try again";
             }
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.CYAN);
             paint.setTextSize(50);
-            canvas.drawText(floor_string, 70, 1450, paint);
-
+            canvas.drawText(floor_string, 70, 1470, paint);
 
             // draw blue circle with anti aliasing turned on
             paint.setAntiAlias(true);
             paint.setColor(Color.BLUE);
+            
+            //For loop through floor array
+            //Draw each router
+            //TODO: Draw only routers that it picks up
+            //TODO: Draw routers from different floors in different colours
+            
+            /*These are for calibration
             canvas.drawCircle(28, 1025, radius, paint);
             canvas.drawCircle(28, 1325, radius, paint);
-            canvas.drawCircle(328, 1325, radius, paint);
+            canvas.drawCircle(328, 1325, radius, paint);*/
 
             if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
                 canvas.restore();
