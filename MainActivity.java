@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -88,15 +89,50 @@ public class MainActivity extends AppCompatActivity {
         scanWifi();
 
         Toast.makeText(this, "Done scanning", Toast.LENGTH_LONG).show();
+    }
+
+    public void determine_visibility(){
+        /*This gets the floor of the strongest signal
+        * It displays that floor as the image on screen
+        * If the strongest has no floor, it loops through
+        * all signals until it finds the next strongest with
+        * a floor*/
+
         ImageView imageOne = findViewById(R.id.imageView1);
         ImageView imageTwo = findViewById(R.id.imageView2);
         ImageView imageThree = findViewById(R.id.imageView3);
         ImageView imageFour = findViewById(R.id.imageView4);
+        int floor = 0;
+        for (WifiSignal x: signals){
+            if (x.floor != 0){
+                floor = x.floor;
+                break;
+            }
+        }
 
-        imageOne.setVisibility(View.INVISIBLE);
-        imageTwo.setVisibility(View.VISIBLE);
-        imageThree.setVisibility(View.INVISIBLE);
-        imageFour.setVisibility(View.INVISIBLE);
+        if(floor == 1){
+            imageOne.setVisibility(View.VISIBLE);
+            imageTwo.setVisibility(View.INVISIBLE);
+            imageThree.setVisibility(View.INVISIBLE);
+            imageFour.setVisibility(View.INVISIBLE);
+        } else if (floor == 2){
+            imageOne.setVisibility(View.INVISIBLE);
+            imageTwo.setVisibility(View.VISIBLE);
+            imageThree.setVisibility(View.INVISIBLE);
+            imageFour.setVisibility(View.INVISIBLE);
+        } else if (floor == 3){
+            imageOne.setVisibility(View.INVISIBLE);
+            imageTwo.setVisibility(View.INVISIBLE);
+            imageThree.setVisibility(View.VISIBLE);
+            imageFour.setVisibility(View.INVISIBLE);
+        } else if (floor == 4) {
+            imageOne.setVisibility(View.INVISIBLE);
+            imageTwo.setVisibility(View.INVISIBLE);
+            imageThree.setVisibility(View.INVISIBLE);
+            imageFour.setVisibility(View.VISIBLE);
+        }
+
+
     }
 
 
@@ -147,9 +183,11 @@ public class MainActivity extends AppCompatActivity {
                 WifiOutput.add(test);
 
                 arrayList.add(scanResult.SSID + " - " + scanResult.capabilities);
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
             }
             order_signals();
+            tv1.setText("signals" + signals.size());
+            determine_visibility();
         }
     };
 
