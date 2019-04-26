@@ -125,35 +125,35 @@ public class MainActivity extends AppCompatActivity {
             imageThree.setVisibility(View.INVISIBLE);
             imageFour.setVisibility(View.INVISIBLE);*/
             //Draw the routers
-            draw_routers(Floor1);
+            draw_routers(1, Floor1);
         } else if (floor == 2){
-            imageOne.setVisibility(View.INVISIBLE);
+            /*imageOne.setVisibility(View.INVISIBLE);
             imageTwo.setVisibility(View.VISIBLE);
             imageThree.setVisibility(View.INVISIBLE);
-            imageFour.setVisibility(View.INVISIBLE);
-            draw_routers(Floor2);
+            imageFour.setVisibility(View.INVISIBLE);*/
+            draw_routers(2, Floor2);
         } else if (floor == 3){
-            imageOne.setVisibility(View.INVISIBLE);
+            /*imageOne.setVisibility(View.INVISIBLE);
             imageTwo.setVisibility(View.INVISIBLE);
             imageThree.setVisibility(View.VISIBLE);
-            imageFour.setVisibility(View.INVISIBLE);
-            //draw_routers(Floor3);
+            imageFour.setVisibility(View.INVISIBLE);8*/
+            draw_routers(3, Floor3);
         } else if (floor == 4) {
-            imageOne.setVisibility(View.INVISIBLE);
+            /*imageOne.setVisibility(View.INVISIBLE);
             imageTwo.setVisibility(View.INVISIBLE);
             imageThree.setVisibility(View.INVISIBLE);
-            imageFour.setVisibility(View.VISIBLE);
-            //draw_routers(Floor4);
+            imageFour.setVisibility(View.VISIBLE);*/
+            draw_routers(4, Floor4);
         }
     }
 
-    public void draw_routers(ArrayList<Router> floor){
+    public void draw_routers(int floor_number, ArrayList<Router> floor){
         //Only draw the routers that it picks up, different colour for different floor routers
-        int floor_number = 4;
         Toast.makeText(this, "Drawing routers", Toast.LENGTH_LONG).show();
         CanvasView test = new CanvasView(this, floor_number, floor);
         setContentView(test);
     }
+
     //Thanks to this: http://www.coderzheaven.com/2016/12/17/introduction-to-android-canvas-simple-example/
     private class CanvasView extends View {
         private ArrayList<Router> routers = new ArrayList<>();
@@ -173,29 +173,35 @@ public class MainActivity extends AppCompatActivity {
             canvas.drawPaint(paint);*/
 
             Paint paint = new Paint();
+            String floor_string;
             if (floor == 1){
+                //https://stackoverflow.com/questions/21082184/canvas-drawbitmap-is-not-drawing-anything
                 Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton1);
                 Rect source = new Rect(0, 0, 1100, 1400);
                 canvas.drawBitmap(bMap, null, source, paint);
+                floor_string = "You are on the first floor, congratulations";
             } else if (floor == 2){
                 Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton2);
                 Rect source = new Rect(0, 0, 1100, 1400);
                 canvas.drawBitmap(bMap, null, source, paint);
+                floor_string = "You are on the second floor, congratulations";
             } else if (floor == 3){
                 Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton3);
                 Rect source = new Rect(0, 0, 1100, 1400);
                 canvas.drawBitmap(bMap, null, source, paint);
+                floor_string = "You are on the third floor, congratulations";
             } else if (floor == 4){
                 Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton4);
                 Rect source = new Rect(0, 0, 600, 1400);
                 canvas.drawBitmap(bMap, null, source, paint);
+                floor_string = "You are on the fourth floor, congratulations";
             } else {
-                paint.setStyle(Paint.Style.FILL);
-                paint.setColor(Color.GREEN);
-                paint.setTextSize(40);
-                canvas.drawText("Can't find the floor you are on, please check you are in the correct dimension", initX, initY + 600, paint);
+                floor_string = "Unable to find floor, please check you are in the correct dimension and try again";
             }
-            //paint.setStyle(Paint.Style.FILL);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.CYAN);
+            paint.setTextSize(50);
+            canvas.drawText(floor_string, 70, 1450, paint);
 
 
             // draw blue circle with anti aliasing turned on
