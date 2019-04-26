@@ -5,6 +5,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -107,27 +112,32 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-
+        floor = 4;
         if(floor == 1){
             imageOne.setVisibility(View.VISIBLE);
             imageTwo.setVisibility(View.INVISIBLE);
             imageThree.setVisibility(View.INVISIBLE);
             imageFour.setVisibility(View.INVISIBLE);
+            //Draw the routers
+            //draw_routers(Floor1);
         } else if (floor == 2){
             imageOne.setVisibility(View.INVISIBLE);
             imageTwo.setVisibility(View.VISIBLE);
             imageThree.setVisibility(View.INVISIBLE);
             imageFour.setVisibility(View.INVISIBLE);
+            //draw_routers(Floor2);
         } else if (floor == 3){
             imageOne.setVisibility(View.INVISIBLE);
             imageTwo.setVisibility(View.INVISIBLE);
             imageThree.setVisibility(View.VISIBLE);
             imageFour.setVisibility(View.INVISIBLE);
+            //draw_routers(Floor3);
         } else if (floor == 4) {
             imageOne.setVisibility(View.INVISIBLE);
             imageTwo.setVisibility(View.INVISIBLE);
             imageThree.setVisibility(View.INVISIBLE);
             imageFour.setVisibility(View.VISIBLE);
+            //draw_routers(Floor4);
         }
     }
 
@@ -221,26 +231,50 @@ public class MainActivity extends AppCompatActivity {
         Floor1.add(new Router(1, 42, 1, "CO159", "70:70:8b:d3:5e:60"));
         Floor1.add(new Router(1, 42, 1, "CO159", "70:70:8b:d3:5e:61"));
 
+        Floor1.add(new Router(7, 42, 1, "CO151", "70:70:8b:be:01:af"));
+        Floor1.add(new Router(7, 42, 1, "CO151", "70:70:8b:be:01:a0"));
         Floor1.add(new Router(7, 42, 1, "CO151", "70:70:8b:be:01:a1"));
         Floor1.add(new Router(7, 42, 1, "CO151", "70:70:8b:be:01:a6"));
 
         Floor1.add(new Router(22, 40, 1, "CO143", "70:70:8b:d3:5b:6e"));
         Floor1.add(new Router(22, 40, 1, "CO143", "70:70:8b:d3:5b:6f"));
+        Floor1.add(new Router(22, 40, 1, "CO143", "70:70:8b:d3:5b:60"));
+        Floor1.add(new Router(22, 40, 1, "CO143", "70:70:8b:d3:5b:61"));
 
         Floor1.add(new Router(32, 37, 1, "CO141", "70:70:8b:ce:29:40"));
         Floor1.add(new Router(32, 37, 1, "CO141", "70:70:8b:ce:29:41"));
+        Floor1.add(new Router(32, 37, 1, "CO141", "70:70:8b:ce:29:46"));
 
         Floor1.add(new Router(44, 37, 1, "CO121", "00:2c:c8:cc:30:80"));
         Floor1.add(new Router(44, 37, 1, "CO121", "00:2c:c8:cc:30:81"));
         Floor1.add(new Router(44, 37, 1, "CO121", "00:2c:c8:cc:30:86"));
 
+        Floor1.add(new Router(67, 37, 1, "CO110", "70:70:8b:be:0c:89"));
         Floor1.add(new Router(67, 37, 1, "CO110", "70:70:8b:be:0c:8e"));
         Floor1.add(new Router(67, 37, 1, "CO110", "70:70:8b:be:0c:8f"));
+        Floor1.add(new Router(67, 37, 1, "CO110", "70:70:8b:be:0c:80"));
 
         Floor1.add(new Router(80, 10, 1, "CO105", "b0:8b:cf:27:7b:c0"));
+        Floor1.add(new Router(80, 10, 1, "CO105", "b0:8b:cf:27:7b:co"));
         Floor1.add(new Router(80, 10, 1, "CO105", "b0:8b:cf:27:7b:c1"));
         Floor1.add(new Router(80, 10, 1, "CO105", "b0:8b:cf:27:7b:ce"));//5G
         Floor1.add(new Router(80, 10, 1, "CO105", "b0:8b:cf:27:7b:cf"));
+
+        Floor1.add(new Router(15, 20, 1, "Arthurs1", "74:88:bb:c6:b8:ae"));
+        Floor1.add(new Router(15, 20, 1, "Arthurs1", "74:88:bb:c6:b8:af"));
+        Floor1.add(new Router(15, 20, 1, "Arthurs1", "74:88:bb:c6:b8:a9"));
+
+        //Unsure about this
+        Floor1.add(new Router(52, 35, 1, "CO122", "70:6d:15:09:c3:6e"));
+        Floor1.add(new Router(52, 35, 1, "CO122", "70:6d:15:09:c3:69"));
+        Floor1.add(new Router(52, 35, 1, "CO122", "70:6d:15:09:c3:60"));
+        Floor1.add(new Router(52, 35, 1, "CO122", "70:6d:15:09:c3:66"));
+
+        Floor1.add(new Router(15, 22, 1, "Arthurs2", "b0:8b:cf:35:31:00"));
+        Floor1.add(new Router(15, 22, 1, "Arthurs2", "b0:8b:cf:35:31:01"));
+
+        Floor1.add(new Router(8, 21, 1, "Arthurs3", "b0:8b:cf:0a:36:0e"));
+        Floor1.add(new Router(8, 21, 1, "Arthurs3", "b0:8b:cf:0a:36:0f"));
 
         Floor1.add(new Router(52, 32, 1, "CO122", "54:92:74:d2:34:70"));
         Floor1.add(new Router(52, 32, 1, "CO122", "54:92:74:d2:34:71"));
@@ -293,10 +327,13 @@ public class MainActivity extends AppCompatActivity {
 
         Floor2.add(new Router(57, 11, 2, "CO221", "00:d7:8f:f3:95:80"));
         Floor2.add(new Router(57, 11, 2, "CO221", "00:d7:8f:f3:95:86"));
+        Floor2.add(new Router(57, 11, 2, "CO221", "00:d7:8f:f3:95:8e"));
         Floor2.add(new Router(57, 11, 2, "CO221", "00:d7:8f:f3:95:8f"));
 
         Floor3.add(new Router(5, 4, 3, "CO337", "70:6d:15:36:b6:2e"));
         Floor3.add(new Router(5, 4, 3, "CO337", "70:6d:15:36:b6:2f"));
+        Floor3.add(new Router(5, 4, 3, "CO337", "70:6d:15:36:b6:20"));
+        Floor3.add(new Router(5, 4, 3, "CO337", "70:6d:15:36:b6:22"));
 
         Floor3.add(new Router(2, 6, 3, "CO365", "bc:26:c7:94:91:40"));
         Floor3.add(new Router(2, 6, 3, "CO365", "bc:26:c7:94:91:41"));
@@ -309,19 +346,23 @@ public class MainActivity extends AppCompatActivity {
         Floor3.add(new Router(10, 37, 3, "CO352", "70:6d:15:40:35:c1"));
         Floor3.add(new Router(10, 37, 3, "CO352", "70:6d:15:40:35:ce"));//5G
         Floor3.add(new Router(10, 37, 3, "CO352", "70:6d:15:40:35:cf"));
+        Floor3.add(new Router(10, 37, 3, "CO352", "70:6d:15:40:35:c6"));
 
         Floor3.add(new Router(32, 42, 3, "CO334", "70:6d:15:48:15:2e"));
         Floor3.add(new Router(32, 42, 3, "CO334", "70:6d:15:48:15:2f"));
+        Floor3.add(new Router(32, 42, 3, "CO334", "70:6d:15:48:15:20"));
 
         Floor3.add(new Router(43, 5, 3, "CO319", "70:6d:15:3b:a2:60"));
         Floor3.add(new Router(43, 5, 3, "CO319", "70:6d:15:3b:a2:61"));
         Floor3.add(new Router(43, 5, 3, "CO319", "70:6d:15:3b:a2:6e"));//5G
         Floor3.add(new Router(43, 5, 3, "CO319", "70:6d:15:3b:a2:6f"));
 
-
         Floor3.add(new Router(43, 5, 3, "CO319", "70:6d:15:3b:a2:66"));//Not 100% on this
 
+        Floor3.add(new Router(62, 10, 3, "CO310", "e8:65:49:10:00:de"));
         Floor3.add(new Router(62, 10, 3, "CO310", "e8:65:49:10:00:df"));
+        Floor3.add(new Router(62, 10, 3, "CO310", "e8:65:49:10:00:d0"));
+        Floor3.add(new Router(62, 10, 3, "CO310", "e8:65:49:10:00:d1"));
         Floor3.add(new Router(62, 10, 3, "CO310", "e8:65:49:10:00:d9"));
 
         Floor3.add(new Router(80, 11, 3, "CO304", "70:6d:15:05:be:40"));
@@ -336,9 +377,10 @@ public class MainActivity extends AppCompatActivity {
         Floor4.add(new Router(55, 12, 4, "CO418", "70:6d:15:35:42:00")); //2.462G
         Floor4.add(new Router(55, 12, 4, "CO418", "70:6d:15:35:42:01"));
 
-        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:53:32:e0"));//2.412G
-        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:53:32:ee"));//5.745G
-        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:53:32:ef"));
+        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:35:32:e1"));
+        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:35:32:e0"));//2.412G
+        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:35:32:ee"));//5.745G
+        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:35:32:ef"));
 
         Floor4.add(new Router(12, 12, 4, "CO435", "70:6d:15:40:cd:60"));//2.412G
         Floor4.add(new Router(12, 12, 4, "CO435", "70:6d:15:40:cd:61"));
