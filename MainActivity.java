@@ -84,12 +84,10 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(adapter);
-
         initiate_routers();
         scanWifi();
-
-        Toast.makeText(this, "Done scanning", Toast.LENGTH_LONG).show();
     }
+
 
     public void determine_visibility(){
         /*This gets the floor of the strongest signal
@@ -131,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
             imageThree.setVisibility(View.INVISIBLE);
             imageFour.setVisibility(View.VISIBLE);
         }
-
-
     }
 
 
@@ -212,6 +208,9 @@ public class MainActivity extends AppCompatActivity {
         }
         for (Router y: Floor3){
             if(y.BSSID.equals(MAC)){ return 3; }
+        }
+        for (Router z: Floor4){
+            if(z.BSSID.equals(MAC)){ return 4; }
         }
 
         return 0;
