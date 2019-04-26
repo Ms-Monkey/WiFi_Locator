@@ -167,32 +167,32 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            int initX = 200, initY = 200, radius = 15, rectWidth = 500, rectHeight = 400;
+            int radius = 15;
             // make the entire canvas white
             /*paint.setColor(Color.WHITE);
             canvas.drawPaint(paint);*/
-
+            floor = 4;
             Paint paint = new Paint();
             String floor_string;
             if (floor == 1){
                 //https://stackoverflow.com/questions/21082184/canvas-drawbitmap-is-not-drawing-anything
                 Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton1);
-                Rect source = new Rect(0, 0, 1100, 1400);
+                Rect source = new Rect(-20, 0, 950, 1435);
                 canvas.drawBitmap(bMap, null, source, paint);
                 floor_string = "You are on the first floor, congratulations";
             } else if (floor == 2){
                 Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton2);
-                Rect source = new Rect(0, 0, 1100, 1400);
+                Rect source = new Rect(0, 0, 900, 1400);
                 canvas.drawBitmap(bMap, null, source, paint);
                 floor_string = "You are on the second floor, congratulations";
             } else if (floor == 3){
                 Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton3);
-                Rect source = new Rect(0, 0, 1100, 1400);
+                Rect source = new Rect(0, 0, 930, 1410);
                 canvas.drawBitmap(bMap, null, source, paint);
                 floor_string = "You are on the third floor, congratulations";
             } else if (floor == 4){
                 Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.cotton4);
-                Rect source = new Rect(0, 0, 600, 1400);
+                Rect source = new Rect(-30, 0, 520, 1390);
                 canvas.drawBitmap(bMap, null, source, paint);
                 floor_string = "You are on the fourth floor, congratulations";
             } else {
@@ -207,7 +207,9 @@ public class MainActivity extends AppCompatActivity {
             // draw blue circle with anti aliasing turned on
             paint.setAntiAlias(true);
             paint.setColor(Color.BLUE);
-            canvas.drawCircle(initX, initY, radius, paint);
+            canvas.drawCircle(28, 1025, radius, paint);
+            canvas.drawCircle(28, 1325, radius, paint);
+            canvas.drawCircle(328, 1325, radius, paint);
 
             if (Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
                 canvas.restore();
