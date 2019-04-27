@@ -214,8 +214,11 @@ public class MainActivity extends AppCompatActivity {
             double[] coords = get_coordinates();
             paint.setColor(Color.MAGENTA);
             canvas.drawCircle(offsetX + (float) (coords[1] * 15), offsetY + (float) (coords[0] * 15), radius, paint);
-            String positionString = "X: " + coords[0] + ", Y: " + coords[1] + ", Z" + floor);
-            canvas.drawText(positionString, 70, 1530, paint);
+            canvas.drawText("You are (somewhere near) here", (float) (coords[1] * 15) + 20, (float) (coords[0] * 15), paint);
+
+            DecimalFormat df = new DecimalFormat("##.#");
+            String positionString = ("X: " + df.format(coords[0]) + ", Y: " + df.format(coords[1]) + ", Z: " + Integer.toString(floor));
+            canvas.drawText(positionString, 70, 1520, paint);
 
             /*These are for calibration
             canvas.drawCircle(28, 1025, radius, paint);
