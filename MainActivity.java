@@ -118,31 +118,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-
+        floor = 1;
         if(floor == 1){
-            /*imageOne.setVisibility(View.VISIBLE);
-            imageTwo.setVisibility(View.INVISIBLE);
-            imageThree.setVisibility(View.INVISIBLE);
-            imageFour.setVisibility(View.INVISIBLE);*/
-            //Draw the routers
             draw_routers(1, Floor1);
         } else if (floor == 2){
-            /*imageOne.setVisibility(View.INVISIBLE);
-            imageTwo.setVisibility(View.VISIBLE);
-            imageThree.setVisibility(View.INVISIBLE);
-            imageFour.setVisibility(View.INVISIBLE);*/
             draw_routers(2, Floor2);
         } else if (floor == 3){
-            /*imageOne.setVisibility(View.INVISIBLE);
-            imageTwo.setVisibility(View.INVISIBLE);
-            imageThree.setVisibility(View.VISIBLE);
-            imageFour.setVisibility(View.INVISIBLE);8*/
             draw_routers(3, Floor3);
         } else if (floor == 4) {
-            /*imageOne.setVisibility(View.INVISIBLE);
-            imageTwo.setVisibility(View.INVISIBLE);
-            imageThree.setVisibility(View.INVISIBLE);
-            imageFour.setVisibility(View.VISIBLE);*/
             draw_routers(4, Floor4);
         }
     }
@@ -156,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Thanks to this: http://www.coderzheaven.com/2016/12/17/introduction-to-android-canvas-simple-example/
     private class CanvasView extends View {
-        private ArrayList<Router> routers = new ArrayList<>();
+        private ArrayList<Router> routers;
         private int floor;
         public CanvasView(Context context, int floor_number, ArrayList<Router> floor) {
             super(context);
@@ -207,10 +190,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 floor_string = "Unable to find floor, please check you are in the correct dimension and try again";
             }
-            paint.setStyle(Paint.Style.FILL);
-            paint.setColor(Color.CYAN);
-            paint.setTextSize(50);
-            canvas.drawText(floor_string, 70, 1470, paint);
 
             // draw blue circle with anti aliasing turned on
             paint.setAntiAlias(true);
@@ -220,8 +199,15 @@ public class MainActivity extends AppCompatActivity {
             for (Router x: routers){
                 //WARNING: y is now x, and x is now y
                 //WARNING: 15 pixels per meter
+                floor_string = String.valueOf(x.z);
                 canvas.drawCircle(offsetX + (x.y * 15), offsetY + (x.x * 15), radius, paint);
             }
+
+
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.CYAN);
+            paint.setTextSize(50);
+            canvas.drawText(floor_string, 70, 1470, paint);
             //Draw each router
             //TODO: Draw only routers that it picks up
             //TODO: Draw routers from different floors in different colours
@@ -327,31 +313,31 @@ public class MainActivity extends AppCompatActivity {
         Floor2.clear();
         Floor3.clear();
         Floor4.clear();
-        Floor1.add(new Router(1, 42, 1, "CO159", "70:70:8b:d3:5e:60"));
-        Floor1.add(new Router(1, 42, 1, "CO159", "70:70:8b:d3:5e:61"));
+        Floor1.add(new Router(1, 38, 1, "CO159", "70:70:8b:d3:5e:60"));
+        Floor1.add(new Router(1, 38, 1, "CO159", "70:70:8b:d3:5e:61"));
 
-        Floor1.add(new Router(7, 42, 1, "CO151", "70:70:8b:be:01:af"));
-        Floor1.add(new Router(7, 42, 1, "CO151", "70:70:8b:be:01:a0"));
-        Floor1.add(new Router(7, 42, 1, "CO151", "70:70:8b:be:01:a1"));
-        Floor1.add(new Router(7, 42, 1, "CO151", "70:70:8b:be:01:a6"));
+        Floor1.add(new Router(7, 39, 1, "CO151", "70:70:8b:be:01:af"));
+        Floor1.add(new Router(7, 39, 1, "CO151", "70:70:8b:be:01:a0"));
+        Floor1.add(new Router(7, 39, 1, "CO151", "70:70:8b:be:01:a1"));
+        Floor1.add(new Router(7, 39, 1, "CO151", "70:70:8b:be:01:a6"));
 
         Floor1.add(new Router(22, 40, 1, "CO143", "70:70:8b:d3:5b:6e"));
         Floor1.add(new Router(22, 40, 1, "CO143", "70:70:8b:d3:5b:6f"));
         Floor1.add(new Router(22, 40, 1, "CO143", "70:70:8b:d3:5b:60"));
         Floor1.add(new Router(22, 40, 1, "CO143", "70:70:8b:d3:5b:61"));
 
-        Floor1.add(new Router(32, 37, 1, "CO141", "70:70:8b:ce:29:40"));
-        Floor1.add(new Router(32, 37, 1, "CO141", "70:70:8b:ce:29:41"));
-        Floor1.add(new Router(32, 37, 1, "CO141", "70:70:8b:ce:29:46"));
+        Floor1.add(new Router(30, 38, 1, "CO141", "70:70:8b:ce:29:40"));
+        Floor1.add(new Router(30, 38, 1, "CO141", "70:70:8b:ce:29:41"));
+        Floor1.add(new Router(30, 38, 1, "CO141", "70:70:8b:ce:29:46"));
 
-        Floor1.add(new Router(44, 37, 1, "CO121", "00:2c:c8:cc:30:80"));
-        Floor1.add(new Router(44, 37, 1, "CO121", "00:2c:c8:cc:30:81"));
-        Floor1.add(new Router(44, 37, 1, "CO121", "00:2c:c8:cc:30:86"));
+        Floor1.add(new Router(44, 38, 1, "CO121", "00:2c:c8:cc:30:80"));
+        Floor1.add(new Router(44, 38, 1, "CO121", "00:2c:c8:cc:30:81"));
+        Floor1.add(new Router(44, 38, 1, "CO121", "00:2c:c8:cc:30:86"));
 
-        Floor1.add(new Router(67, 37, 1, "CO110", "70:70:8b:be:0c:89"));
-        Floor1.add(new Router(67, 37, 1, "CO110", "70:70:8b:be:0c:8e"));
-        Floor1.add(new Router(67, 37, 1, "CO110", "70:70:8b:be:0c:8f"));
-        Floor1.add(new Router(67, 37, 1, "CO110", "70:70:8b:be:0c:80"));
+        Floor1.add(new Router(67, 38, 1, "CO110", "70:70:8b:be:0c:89"));
+        Floor1.add(new Router(67, 38, 1, "CO110", "70:70:8b:be:0c:8e"));
+        Floor1.add(new Router(67, 38, 1, "CO110", "70:70:8b:be:0c:8f"));
+        Floor1.add(new Router(67, 38, 1, "CO110", "70:70:8b:be:0c:80"));
 
         Floor1.add(new Router(80, 10, 1, "CO105", "b0:8b:cf:27:7b:c0"));
         Floor1.add(new Router(80, 10, 1, "CO105", "b0:8b:cf:27:7b:co"));
@@ -364,16 +350,16 @@ public class MainActivity extends AppCompatActivity {
         Floor1.add(new Router(15, 23, 1, "Arthurs1", "74:88:bb:c6:b8:a9"));
 
         //Unsure about this
-        Floor1.add(new Router(52, 35, 1, "CO122", "70:6d:15:09:c3:6e"));
-        Floor1.add(new Router(52, 35, 1, "CO122", "70:6d:15:09:c3:69"));
-        Floor1.add(new Router(52, 35, 1, "CO122", "70:6d:15:09:c3:60"));
-        Floor1.add(new Router(52, 35, 1, "CO122", "70:6d:15:09:c3:66"));
+        Floor1.add(new Router(50, 36, 1, "CO122", "70:6d:15:09:c3:6e"));
+        Floor1.add(new Router(50, 36, 1, "CO122", "70:6d:15:09:c3:69"));
+        Floor1.add(new Router(50, 36, 1, "CO122", "70:6d:15:09:c3:60"));
+        Floor1.add(new Router(50, 36, 1, "CO122", "70:6d:15:09:c3:66"));
 
-        Floor1.add(new Router(15, 25, 1, "Arthurs2", "b0:8b:cf:35:31:00"));
-        Floor1.add(new Router(15, 25, 1, "Arthurs2", "b0:8b:cf:35:31:01"));
+        Floor1.add(new Router(16, 26, 1, "Arthurs2", "b0:8b:cf:35:31:00"));
+        Floor1.add(new Router(16, 26, 1, "Arthurs2", "b0:8b:cf:35:31:01"));
 
-        Floor1.add(new Router(8, 24, 1, "Arthurs3", "b0:8b:cf:0a:36:0e"));
-        Floor1.add(new Router(8, 24, 1, "Arthurs3", "b0:8b:cf:0a:36:0f"));
+        Floor1.add(new Router(9, 24, 1, "Arthurs3", "b0:8b:cf:0a:36:0e"));
+        Floor1.add(new Router(9, 24, 1, "Arthurs3", "b0:8b:cf:0a:36:0f"));
 
         Floor1.add(new Router(52, 32, 1, "CO122", "54:92:74:d2:34:70"));
         Floor1.add(new Router(52, 32, 1, "CO122", "54:92:74:d2:34:71"));
@@ -381,12 +367,12 @@ public class MainActivity extends AppCompatActivity {
         Floor1.add(new Router(52, 25, 1, "COLT122", "e8:65:49:40:0c:10"));
         Floor1.add(new Router(52, 25, 1, "COLT122", "e8:65:49:40:0c:11"));
 
-        Floor1.add(new Router(30, 5, 1, "CO126", "bc:26:c7:40:c0:00"));
-        Floor1.add(new Router(30, 5, 1, "CO126", "bc:26:c7:40:c0:01"));
+        Floor1.add(new Router(47, 6, 1, "CO126", "bc:26:c7:40:c0:00"));
+        Floor1.add(new Router(47, 6, 1, "CO126", "bc:26:c7:40:c0:01"));
 
-        Floor1.add(new Router(20, 5, 1, "CO132", "b0:8b:cf:35:2f:c1")); //Not 100% sure
-        Floor1.add(new Router(20, 5, 1, "CO132", "b0:8b:cf:35:2f:ce"));
-        Floor1.add(new Router(20, 5, 1, "CO132", "b0:8b:cf:35:2f:cf"));
+        Floor1.add(new Router(37, 6, 1, "CO132", "b0:8b:cf:35:2f:c1")); //Not 100% sure
+        Floor1.add(new Router(37, 6, 1, "CO132", "b0:8b:cf:35:2f:ce"));
+        Floor1.add(new Router(37, 6, 1, "CO132", "b0:8b:cf:35:2f:cf"));
 
         Floor1.add(new Router(-5, 12, 1, "CO154", "00:92:ee:d3:80:ae"));
         Floor1.add(new Router(-5, 12, 1, "CO154", "00:92:ee:d3:80:af"));
