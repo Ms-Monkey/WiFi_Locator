@@ -33,10 +33,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.concurrent.TimeUnit;import android.app.Application;
 import android.content.Context;
+
+import com.lemmingapex.trilateration.NonLinearLeastSquaresSolver;
+import com.lemmingapex.trilateration.TrilaterationFunction;
+
+import org.apache.commons.math3.fitting.leastsquares.LeastSquaresOptimizer;
+import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.RealVector;
+
 import java.util.ArrayList;
 
 import static java.lang.System.exit;
@@ -76,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 setContentView(R.layout.activity_main);
                 TextView tv1 = (TextView) findViewById(R.id.wifiOutput);
-                determine_visibility();
+                get_coordinates();
+                //determine_visibility();
             }
         });
 
@@ -193,14 +204,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             paint.setAntiAlias(true);
-            paint.setColor(Color.RED);
 
             //WARNING: 15 pixels per meter
             for (Router x: routers){
+                paint.setColor(Color.RED);
                 for(WifiSignal y: signals){
                     if(x.BSSID.equals(y.BSSID)){
                         paint.setColor(Color.CYAN);
-                        break;
                     }
                 }
                 canvas.drawCircle(offsetX + (x.y * 15), offsetY + (x.x * 15), radius, paint);
@@ -210,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
                 if (signals.get(0).BSSID.equals(a.BSSID)){
                     paint.setStyle(Paint.Style.STROKE);
                     paint.setStrokeWidth(8);
+                    paint.setColor(Color.GREEN);
                     canvas.drawCircle(offsetX + (a.y * 15), offsetY + (a.x * 15), (signals.get(0).distanceInt * 15), paint);
                 }
 
@@ -230,8 +241,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public List<Integer> get_coordinates(){
-        return null;
+    public void get_coordinates(){
+        int length = signals.size();
+        double[][] positions = new double[length][2];
+        double[] distances = new double[length];
+        int count = 0;
+        for (WifiSignal x: signals){
+            positions[count][0] = Double.valueOf(x.x);
+            positions[count][1] = Double.valueOf(x.y);
+            distances[count] = Double.valueOf(x.distanceInt);
+            count++;
+        }
+        NonLinearLeastSquaresSolver solver = new NonLinearLeastSquaresSolver(new TrilaterationFunction(positions, distances), new LevenbergMarquardtOptimizer());
+        LeastSquaresOptimizer.Optimum optimum = solver.solve();
+
+        // the answer
+        double[] calculatedPosition = optimum.getPoint().toArray();
+        TextView tv1 = (TextView) findViewById(R.id.wifiOutput);
+        DecimalFormat df = new DecimalFormat("##.#");
+        tv1.setText(df.format(calculatedPosition[0]) + ", " + df.format(calculatedPosition[1]));
+
+        // error and geometry information
+        //RealVector standardDeviation = optimum.getSigma(0);
+        //RealMatrix covarianceMatrix = optimum.getCovariances(0);
+
     }
 
     public void order_signals(){
