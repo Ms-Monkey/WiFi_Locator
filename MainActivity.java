@@ -208,6 +208,15 @@ public class MainActivity extends AppCompatActivity {
                 canvas.drawCircle(offsetX + (x.y * 15), offsetY + (x.x * 15), radius, paint);
             }
 
+            for (Router a: routers){
+                if (signals.get(0).BSSID.equals(a.BSSID)){
+                    paint.setStyle(Paint.Style.STROKE);
+                    paint.setStrokeWidth(8);
+                    canvas.drawCircle(offsetX + (a.y * 15), offsetY + (a.x * 15), (signals.get(0).distanceInt * 15), paint);
+                }
+
+            }
+
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.CYAN);
             paint.setTextSize(50);
@@ -402,13 +411,13 @@ public class MainActivity extends AppCompatActivity {
         Floor2.add(new Router(86, 10, 2, "CO200", "70:6d:15:40:4d:00"));
         Floor2.add(new Router(86, 10, 2, "CO200", "70:6d:15:40:4d:01"));
 
-        Floor2.add(new Router(43, 10, 2, "CO225", "70:b3:17:d5:37:e0"));
-        Floor2.add(new Router(43, 10, 2, "CO225", "70:b3:17:d5:37:e1"));
-        Floor2.add(new Router(43, 10, 2, "CO225", "70:b3:17:d5:37:e6")); //Not 100% sure
+        Floor2.add(new Router(47, 6, 2, "CO225", "70:b3:17:d5:37:e0"));
+        Floor2.add(new Router(47, 6, 2, "CO225", "70:b3:17:d5:37:e1"));
+        Floor2.add(new Router(47, 6, 2, "CO225", "70:b3:17:d5:37:e6")); //Not 100% sure
 
-        Floor2.add(new Router(47, 6, 2, "CO228", "70:b3:17:d5:34:40"));
-        Floor2.add(new Router(47, 6, 2, "CO228", "70:b3:17:d5:34:41"));
-        Floor2.add(new Router(47, 6, 2, "CO228", "70:b3:17:d5:34:46"));
+        Floor2.add(new Router(43, 10, 2, "CO228", "70:b3:17:d5:34:40"));
+        Floor2.add(new Router(43, 10, 2, "CO228", "70:b3:17:d5:34:41"));
+        Floor2.add(new Router(43, 10, 2, "CO228", "70:b3:17:d5:34:46"));
 
         Floor2.add(new Router(30, 7, 2, "CO232", "70:6d:15:40:56:0e"));
         Floor2.add(new Router(30, 7, 2, "CO232", "70:6d:15:40:56:0f"));
