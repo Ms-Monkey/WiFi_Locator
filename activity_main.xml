@@ -230,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //https://stackoverflow.com/questions/30336278/multi-point-trilateration-algorithm-in-java
     public double[] get_coordinates(){
         int length = signals.size();
         double[][] positions = new double[length][2];
@@ -244,15 +245,9 @@ public class MainActivity extends AppCompatActivity {
         NonLinearLeastSquaresSolver solver = new NonLinearLeastSquaresSolver(new TrilaterationFunction(positions, distances), new LevenbergMarquardtOptimizer());
         LeastSquaresOptimizer.Optimum optimum = solver.solve();
 
-        // the answer
         double[] calculatedPosition = optimum.getPoint().toArray();
-        //TextView tv1 = (TextView) findViewById(R.id.wifiOutput);
         DecimalFormat df = new DecimalFormat("##.#");
-        //tv1.setText(df.format(calculatedPosition[0]) + ", " + df.format(calculatedPosition[1]));
         return calculatedPosition;
-        // error and geometry information
-        //RealVector standardDeviation = optimum.getSigma(0);
-        //RealMatrix covarianceMatrix = optimum.getCovariances(0);
 
     }
 
@@ -275,7 +270,9 @@ public class MainActivity extends AppCompatActivity {
                     continue;
                 }
             }
-            signals.add(highest);
+            if(highest.distanceInt < 60) {
+                signals.add(highest);
+            }
         }
     }
 
