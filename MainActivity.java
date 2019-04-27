@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 offsetX = 160;
                 offsetY = 30;
             } else {
-                floor_string = "Unable to find floor, please check you are in the correct dimension and try again";
+                floor_string = "Unable to find floor\nPlease check you are in the correct dimension and try again";
             }
 
             paint.setAntiAlias(true);
@@ -232,6 +232,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public List<int> get_coordinates(){
+
+    }
 
     public void order_signals(){
         signals.clear();
@@ -245,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
             for (WifiSignal y: WifiOutput){
                 //If the value is greater than y's and it isn't in signals already
                 if (highest.level < y.level && !signals.contains(y)){
+                    /*TODO: A check here to remove all signals further than 60m away so they don't shit up my algorithm*/
                     highest = y;
                 } else {
                     continue;
