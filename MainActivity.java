@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             paint.setAntiAlias(true);
-            paint.setColor(Color.BLUE);
+            paint.setColor(Color.RED);
 
             //WARNING: 15 pixels per meter
             for (Router x: routers){
@@ -201,8 +201,6 @@ public class MainActivity extends AppCompatActivity {
                     if(x.BSSID.equals(y.BSSID)){
                         paint.setColor(Color.CYAN);
                         break;
-                    } else {
-                        paint.setColor(Color.RED);
                     }
                 }
                 canvas.drawCircle(offsetX + (x.y * 15), offsetY + (x.x * 15), radius, paint);
@@ -232,8 +230,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public List<int> get_coordinates(){
-
+    public List<Integer> get_coordinates(){
+        return null;
     }
 
     public void order_signals(){
@@ -249,6 +247,7 @@ public class MainActivity extends AppCompatActivity {
                 //If the value is greater than y's and it isn't in signals already
                 if (highest.level < y.level && !signals.contains(y)){
                     /*TODO: A check here to remove all signals further than 60m away so they don't shit up my algorithm*/
+                    /*TODO: Sort by frequency if same router? Have one 2.4 and one 5G signal per router only*/
                     highest = y;
                 } else {
                     continue;
@@ -280,8 +279,8 @@ public class MainActivity extends AppCompatActivity {
 
             for (ScanResult scanResult : results) {
                 //Create Wifi Object, add to it's ordered list
-                int floor = contains_MAC(scanResult.BSSID);
-                WifiSignal test = new WifiSignal(scanResult.SSID, scanResult.BSSID, scanResult.level, scanResult.frequency, floor);
+                Router floor = contains_MAC(scanResult.BSSID);
+                WifiSignal test = new WifiSignal(scanResult.SSID, scanResult.BSSID, scanResult.level, scanResult.frequency, floor.z, floor.x, floor.y, floor);
                 WifiOutput.add(test);
 
                 arrayList.add(scanResult.SSID + " - " + scanResult.capabilities);
@@ -303,20 +302,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public int contains_MAC(String MAC){
+    public Router contains_MAC(String MAC){
         for (Router w: Floor1){
-            if(w.BSSID.equals(MAC)){ return 1; }
+            if(w.BSSID.equals(MAC)){ return w; }
         }
         for (Router x : Floor2){
-            if(x.BSSID.equals(MAC)){ return 2; }
+            if(x.BSSID.equals(MAC)){ return x; }
         }
         for (Router y: Floor3){
-            if(y.BSSID.equals(MAC)){ return 3; }
+            if(y.BSSID.equals(MAC)){ return y; }
         }
         for (Router z: Floor4){
-            if(z.BSSID.equals(MAC)){ return 4; }
+            if(z.BSSID.equals(MAC)){ return z; }
         }
-        return 0;
+        return new Router(0, 0, 0, "None", "None");
     }
 
 
