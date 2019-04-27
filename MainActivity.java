@@ -48,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private Button buttonScan;
     private int size = 0;
+
     public static List<ScanResult> results;
+
     private ArrayList<String> arrayList = new ArrayList<>();
     public static ArrayList<WifiSignal> WifiOutput = new ArrayList<>();
     public static ArrayList<WifiSignal> signals = new ArrayList<>();
@@ -74,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 setContentView(R.layout.activity_main);
                 TextView tv1 = (TextView) findViewById(R.id.wifiOutput);
-                tv1.setText("henlo");
-                scanWifi();
+                determine_visibility();
             }
         });
 
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         initiate_routers();
         scanWifi();
+        Toast.makeText(this, "Good to go", Toast.LENGTH_LONG).show();
     }
 
 
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-        floor = 4;
+
         if(floor == 1){
             draw_routers(1, Floor1);
         } else if (floor == 2){
@@ -132,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void draw_routers(int floor_number, ArrayList<Router> floor){
         //Only draw the routers that it picks up, different colour for different floor routers
-        Toast.makeText(this, "Drawing routers", Toast.LENGTH_LONG).show();
         CanvasView test = new CanvasView(this, floor_number, floor);
         setContentView(test);
     }
@@ -191,26 +192,26 @@ public class MainActivity extends AppCompatActivity {
                 floor_string = "Unable to find floor, please check you are in the correct dimension and try again";
             }
 
-            // draw blue circle with anti aliasing turned on
             paint.setAntiAlias(true);
             paint.setColor(Color.BLUE);
 
-            //For loop through floor array
+            //WARNING: 15 pixels per meter
             for (Router x: routers){
-                //WARNING: y is now x, and x is now y
-                //WARNING: 15 pixels per meter
-                floor_string = String.valueOf(x.z);
+                for(WifiSignal y: signals){
+                    if(x.BSSID.equals(y.BSSID)){
+                        paint.setColor(Color.CYAN);
+                        break;
+                    } else {
+                        paint.setColor(Color.RED);
+                    }
+                }
                 canvas.drawCircle(offsetX + (x.y * 15), offsetY + (x.x * 15), radius, paint);
             }
-
 
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.CYAN);
             paint.setTextSize(50);
             canvas.drawText(floor_string, 70, 1470, paint);
-            //Draw each router
-            //TODO: Draw only routers that it picks up
-            //TODO: Draw routers from different floors in different colours
 
             /*These are for calibration
             canvas.drawCircle(28, 1025, radius, paint);
@@ -248,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
     public void scanWifi() {
         arrayList.clear();
         WifiOutput.clear();
+
         registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         Toast.makeText(this, "Scanning WiFi ...", Toast.LENGTH_SHORT).show();
         wifiManager.startScan();
@@ -273,8 +275,6 @@ public class MainActivity extends AppCompatActivity {
                 //adapter.notifyDataSetChanged();
             }
             order_signals();
-            tv1.setText("signals" + signals.size());
-            determine_visibility();
         }
     };
 
@@ -303,7 +303,6 @@ public class MainActivity extends AppCompatActivity {
         for (Router z: Floor4){
             if(z.BSSID.equals(MAC)){ return 4; }
         }
-
         return 0;
     }
 
@@ -370,9 +369,12 @@ public class MainActivity extends AppCompatActivity {
         Floor1.add(new Router(47, 6, 1, "CO126", "bc:26:c7:40:c0:00"));
         Floor1.add(new Router(47, 6, 1, "CO126", "bc:26:c7:40:c0:01"));
 
+
+        Floor1.add(new Router(37, 6, 1, "CO132", "b0:8b:cf:35:2f:c0"));
         Floor1.add(new Router(37, 6, 1, "CO132", "b0:8b:cf:35:2f:c1")); //Not 100% sure
         Floor1.add(new Router(37, 6, 1, "CO132", "b0:8b:cf:35:2f:ce"));
         Floor1.add(new Router(37, 6, 1, "CO132", "b0:8b:cf:35:2f:cf"));
+        Floor1.add(new Router(37, 6, 1, "CO132", "b0:8b:cf:35:2f:c6"));
 
         Floor1.add(new Router(-5, 12, 1, "CO154", "00:92:ee:d3:80:ae"));
         Floor1.add(new Router(-5, 12, 1, "CO154", "00:92:ee:d3:80:af"));
@@ -392,6 +394,7 @@ public class MainActivity extends AppCompatActivity {
 
         Floor2.add(new Router(44, 30, 2, "CO219", "70:6d:15:40:a3:8e"));
         Floor2.add(new Router(44, 30, 2, "CO219", "70:6d:15:40:a3:8f"));
+        Floor2.add(new Router(44, 30, 2, "CO219", "70:6d:15:40:a3:81"));
 
         Floor2.add(new Router(58, 30, 2, "CO215", "70:6d:15:40:65:c0"));
         Floor2.add(new Router(58, 30, 2, "CO215", "70:6d:15:40:65:c1"));
@@ -411,6 +414,7 @@ public class MainActivity extends AppCompatActivity {
         Floor2.add(new Router(30, 7, 2, "CO232", "70:6d:15:40:56:0f"));
 
         Floor2.add(new Router(52, 11, 2, "CO221", "00:d7:8f:f3:95:80"));
+        Floor2.add(new Router(52, 11, 2, "CO221", "00:d7:8f:f3:95:81"));
         Floor2.add(new Router(52, 11, 2, "CO221", "00:d7:8f:f3:95:86"));
         Floor2.add(new Router(52, 11, 2, "CO221", "00:d7:8f:f3:95:8e"));
         Floor2.add(new Router(52, 11, 2, "CO221", "00:d7:8f:f3:95:8f"));
