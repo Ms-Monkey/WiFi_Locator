@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-        floor = 3;
+        floor = 4;
         if(floor == 1){
             draw_routers(1, Floor1);
         } else if (floor == 2){
@@ -454,22 +454,22 @@ public class MainActivity extends AppCompatActivity {
         Floor3.add(new Router(80, 11, 3, "CO304", "70:6d:15:05:be:41"));
         Floor3.add(new Router(80, 11, 3, "CO304", "70:6d:15:05:be:46"));
 
-        Floor4.add(new Router(80, 6, 4, "CO407", "70:6d:15:40:c9:40"));
-        Floor4.add(new Router(80, 6, 4, "CO407", "70:6d:15:40:c9:41"));
-        Floor4.add(new Router(80, 6, 4, "CO407", "70:6d:15:40:c9:46"));
-        Floor4.add(new Router(80, 6, 4, "CO407", "70:6d:15:40:c9:49"));
+        Floor4.add(new Router(76, 8, 4, "CO407", "70:6d:15:40:c9:40"));
+        Floor4.add(new Router(76, 8, 4, "CO407", "70:6d:15:40:c9:41"));
+        Floor4.add(new Router(76, 8, 4, "CO407", "70:6d:15:40:c9:46"));
+        Floor4.add(new Router(76, 8, 4, "CO407", "70:6d:15:40:c9:49"));
 
-        Floor4.add(new Router(55, 12, 4, "CO418", "70:6d:15:35:42:00")); //2.462G
-        Floor4.add(new Router(55, 12, 4, "CO418", "70:6d:15:35:42:01"));
+        Floor4.add(new Router(52, 14, 4, "CO418", "70:6d:15:35:42:00")); //2.462G
+        Floor4.add(new Router(52, 14, 4, "CO418", "70:6d:15:35:42:01"));
 
-        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:35:32:e1"));
-        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:35:32:e0"));//2.412G
-        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:35:32:ee"));//5.745G
-        Floor4.add(new Router(30, 12, 4, "CO429", "70:6d:15:35:32:ef"));
+        Floor4.add(new Router(30, 15, 4, "CO429", "70:6d:15:35:32:e1"));
+        Floor4.add(new Router(30, 15, 4, "CO429", "70:6d:15:35:32:e0"));//2.412G
+        Floor4.add(new Router(30, 15, 4, "CO429", "70:6d:15:35:32:ee"));//5.745G
+        Floor4.add(new Router(30, 15, 4, "CO429", "70:6d:15:35:32:ef"));
 
-        Floor4.add(new Router(12, 12, 4, "CO435", "70:6d:15:40:cd:60"));//2.412G
-        Floor4.add(new Router(12, 12, 4, "CO435", "70:6d:15:40:cd:61"));
-        Floor4.add(new Router(12, 12, 4, "CO435", "70:6d:15:40:cd:66"));
+        Floor4.add(new Router(11, 13, 4, "CO435", "70:6d:15:40:cd:60"));//2.412G
+        Floor4.add(new Router(11, 13, 4, "CO435", "70:6d:15:40:cd:61"));
+        Floor4.add(new Router(11, 13, 4, "CO435", "70:6d:15:40:cd:66"));
 
     }
 
