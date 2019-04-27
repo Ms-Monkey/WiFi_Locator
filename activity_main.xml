@@ -29,12 +29,11 @@
         android:layout_height="40dp"
         android:layout_gravity="bottom"
         android:layout_margin="15dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@android:color/holo_purple"
         android:text="Show Map"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView1" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="79dp" />
 
     <ListView
         android:id="@+id/wifiList"
@@ -46,20 +45,21 @@
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/wifiOutput"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.633"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scanBtn"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.329" />
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/cotton1"
+        android:layout_width="341dp"
+        android:layout_height="283dp"
+        android:src="@drawable/titan"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.369" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -107,7 +107,7 @@
         app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.883" />
+        app:layout_constraintVertical_bias="0.855" />
 
 
 
