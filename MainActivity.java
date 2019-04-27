@@ -11,23 +11,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,22 +27,14 @@ import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.concurrent.TimeUnit;import android.app.Application;
-import android.content.Context;
 
 import com.lemmingapex.trilateration.NonLinearLeastSquaresSolver;
 import com.lemmingapex.trilateration.TrilaterationFunction;
 
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresOptimizer;
 import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer;
-import org.apache.commons.math3.linear.RealMatrix;
-import org.apache.commons.math3.linear.RealVector;
 
 import java.util.ArrayList;
-
-import static java.lang.System.exit;
-import static java.sql.DriverManager.println;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
@@ -86,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 setContentView(R.layout.activity_main);
                 TextView tv1 = (TextView) findViewById(R.id.wifiOutput);
-                get_coordinates();
-                //determine_visibility();
+                determine_visibility();
+                //get_coordinates();
             }
         });
 
@@ -109,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         initiate_routers();
         scanWifi();
-        Toast.makeText(this, "Good to go", Toast.LENGTH_LONG).show();
+
     }
 
 
@@ -120,10 +104,6 @@ public class MainActivity extends AppCompatActivity {
         * all signals until it finds the next strongest with
         * a floor*/
 
-        ImageView imageOne = findViewById(R.id.imageView1);
-        ImageView imageTwo = findViewById(R.id.imageView2);
-        ImageView imageThree = findViewById(R.id.imageView3);
-        ImageView imageFour = findViewById(R.id.imageView4);
         int floor = 0;
         for (WifiSignal x: signals){
             if (x.floor != 0){
@@ -229,7 +209,16 @@ public class MainActivity extends AppCompatActivity {
             paint.setStyle(Paint.Style.FILL);
             paint.setColor(Color.CYAN);
             paint.setTextSize(50);
-            canvas.drawText(floor_string, 70, 1470, paint);
+            canvas.drawText(floor_string, 70, 1450, paint);
+
+            double[] coords = get_coordinates();
+            paint.setColor(Color.MAGENTA);
+            canvas.drawCircle(offsetX + (float) (coords[1] * 15), offsetY + (float) (coords[0] * 15), radius, paint);
+            canvas.drawText("You are (somewhere near) here", (float) (coords[1] * 15) + 20, (float) (coords[0] * 15), paint);
+
+            DecimalFormat df = new DecimalFormat("##.#");
+            String positionString = ("X: " + df.format(coords[0]) + ", Y: " + df.format(coords[1]) + ", Z: " + Integer.toString(floor));
+            canvas.drawText(positionString, 70, 1520, paint);
 
             /*These are for calibration
             canvas.drawCircle(28, 1025, radius, paint);
@@ -241,7 +230,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void get_coordinates(){
+    //https://stackoverflow.com/questions/30336278/multi-point-trilateration-algorithm-in-java
+    public double[] get_coordinates(){
         int length = signals.size();
         double[][] positions = new double[length][2];
         double[] distances = new double[length];
@@ -255,15 +245,9 @@ public class MainActivity extends AppCompatActivity {
         NonLinearLeastSquaresSolver solver = new NonLinearLeastSquaresSolver(new TrilaterationFunction(positions, distances), new LevenbergMarquardtOptimizer());
         LeastSquaresOptimizer.Optimum optimum = solver.solve();
 
-        // the answer
         double[] calculatedPosition = optimum.getPoint().toArray();
-        TextView tv1 = (TextView) findViewById(R.id.wifiOutput);
         DecimalFormat df = new DecimalFormat("##.#");
-        tv1.setText(df.format(calculatedPosition[0]) + ", " + df.format(calculatedPosition[1]));
-
-        // error and geometry information
-        //RealVector standardDeviation = optimum.getSigma(0);
-        //RealMatrix covarianceMatrix = optimum.getCovariances(0);
+        return calculatedPosition;
 
     }
 
@@ -286,7 +270,9 @@ public class MainActivity extends AppCompatActivity {
                     continue;
                 }
             }
-            signals.add(highest);
+            if(highest.distanceInt < 50) {
+                signals.add(highest);
+            }
         }
     }
 
@@ -296,7 +282,6 @@ public class MainActivity extends AppCompatActivity {
         WifiOutput.clear();
 
         registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-        Toast.makeText(this, "Scanning WiFi ...", Toast.LENGTH_SHORT).show();
         wifiManager.startScan();
     }
 
@@ -305,10 +290,6 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             results = wifiManager.getScanResults();
             unregisterReceiver(this);
-
-            TextView tv1 = (TextView) findViewById(R.id.wifiOutput);
-
-            tv1.setText("lemme see them signals >:)");
 
             for (ScanResult scanResult : results) {
                 //Create Wifi Object, add to it's ordered list
@@ -320,6 +301,10 @@ public class MainActivity extends AppCompatActivity {
                 //adapter.notifyDataSetChanged();
             }
             order_signals();
+            ImageView imageOne = findViewById(R.id.imageView1);
+            imageOne.setVisibility(View.VISIBLE);
+            TextView tv1 = (TextView) findViewById(R.id.wifiOutput);
+            tv1.setText("Good to go");
         }
     };
 
